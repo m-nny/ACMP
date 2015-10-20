@@ -94,5 +94,5 @@ int main()
 			printf(":");
 	}
 		if (carry)
-		printf("+%d days", carry);
+		printf("+%d days\n", carry);
 }

@@ -29,7 +29,7 @@ double const pi = acos(-1);
 //#define end MyLittleEnd
 #define LOCAL
 
-ll ans, x;
+ll cur, x;
 map <ll, int> cnt;
 
 ll bp(ll a, ll n)
@@ -45,6 +45,37 @@ ll bp(ll a, ll n)
 	return res;
 }
 
+vector <int> P;
+bool ok(ll n)
+{
+	int i = 0;
+	for (auto x : cnt)
+		if (x.S > n * P[i])
+			return false;
+	return true;
+}
+
+int N;
+vector <ll> v;
+ll ans = linf;
+
+void rec(int x, ll now)
+{
+	if (x == N)
+	{
+		if (ok(now))
+		{
+			ans = min(ans, now);
+		}
+		return;
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		P[x] = i + 1;
+		rec(x + 1, now * pow(v[x], i));
+	}
+}
+
 int main()
 {
 	#ifdef LOCAL
@@ -54,17 +85,34 @@ int main()
 	scanf(I64, &x);
 	for (ll i = 2; i * i <= x; i++)
 		while (x % i == 0)
-			cnt[i]++, x /= i;
+		{
+			cnt[i]++;
+			x /= i;
+			if (v.empty() || v.back() != i)
+				v.pb(i);
+		}
 	if (x > 1)
-		cnt[x]++;
-	ans = 1ll;
-	for (auto x : cnt)
 	{
-		int q = sqrt(x.S);
-		if (q * q != x.S)
-			q++;
-		ans *= bp(x.F, q);
-		printf(I64 " %d %d\n", x.F, x.S, q);
+		cnt[x]++;
+		if (v.empty() || v.back() != x)
+			v.pb(x);
 	}
+	cur = 1ll;
+	for (int x : v)
+		cur *= x;
+	P = vector <int> (v.size(), 1);
+	/*
+	printf(I64 "\n", cur);
+	for (auto x : cnt)
+		printf(I64 "**%d\n", x.F, x.S);
+	puts("");
+	*/
+	if (ok(cur))
+	{
+		printf(I64, cur);
+		return 0;
+	}
+	N = min(3, int(v.size()));
+	rec(0, cur);
 	printf(I64, ans);
 }
