@@ -25,9 +25,9 @@ double const pi = acos(-1);
 #define S second
 #define fn
  
-vector <int> parse()
+vector <ll> parse()
 {
-	vector <int> v;
+	vector <ll> v;
 	string s;
 	cin >> s;
 	ll cur = 0, p = 1;
@@ -49,11 +49,11 @@ vector <int> parse()
 	return v;
 }
  
-int norm(vector <int> & v)
+ll norm(vector <ll> & v)
 {
 	while (v.size() < 3)
 		v.pb(0);
-	int carry = 0, i = 0;
+	ll carry = 0, i = 0;
 	for (i = 0; i < int(v.size()) - 1; i++)
 	{
 		v[i] = (v[i] + carry);
@@ -66,7 +66,7 @@ int norm(vector <int> & v)
 	return carry;
 }
  
-void sum(vector <int> & l, vector <int> & r)
+void sum(vector <ll> & l, vector <ll> & r)
 {
 	for (int i = 0; i < int(l.size()); i++)
 		l[i] += r[i];
@@ -78,21 +78,16 @@ int main()
 		freopen("input.txt", "r", stdin);
 		freopen("output.txt", "w", stdout);
 	#endif
-	vector <int> a, b;
+	vector <ll> a, b;
 	a = parse();
 	b = parse();
 	norm(a);
-	int carry = norm(b);
+	ll carry = norm(b);
 	sum(a, b);
 	carry += norm(a);
-	for (int i = 2; i >= 0; i--)
-	{
-		if (a[i] < 10)
-			printf("0");
-		printf("%d", a[i]);
-		if (i)
-			printf(":");
-	}
-		if (carry)
-		printf("+%d days\n", carry);
+	printf("%02I64d:", a[2]);
+	printf("%02I64d:", a[1]);
+	printf("%02I64d", a[0]);
+	if (carry)
+		printf("+%64d days", carry);
 }

@@ -27,26 +27,17 @@ double const pi = acos(-1);
 #define next MyLittleNext
 //#define end MyLittleEnd
 #define all(x) x.begin(), x.end()
-#define LOCAL
+//#define LOCAL
 
-int a[33], n;
-char s[33];
-
-ll rec(int pos, int same)
+bool prime(ll x)
 {
-	if (!same)
-		return (1ll << (n - pos));
-	if (n == pos)
-		return 1;
-	ll ans = 0;
-	if (4 < a[pos])
-		ans += rec(pos + 1, 0);
-	if (7 < a[pos])
-		ans += rec(pos + 1, 0);
-	if (4 == a[pos] || 7 == a[pos])
-		ans += rec(pos + 1, 1);
-	return ans;
+	for (ll i = 2; i * i <= x; i++)
+		if (x % i == 0)
+			return 0;
+	return 1;
 }
+
+ll x, ans = 1;
 
 int main()
 {
@@ -54,13 +45,14 @@ int main()
 		freopen("input.txt", "r", stdin);
 		freopen("output.txt", "w", stdout);
 	#endif
-	scanf("%s", s);
-	n = strlen(s);
-	for (int i = 0; i < n; i++)
-		a[i] = s[i] - '0';
-	ll ans = 0;
-	for (int i = 1; i < n; i++)
-		ans += (1ll << i);
-	ans += rec(0, 1);
+	scanf(I64, &x);
+	for (ll i = 2; i < 1010ll; i++)
+		if (x % i == 0 && prime(i))
+		{
+			 ll cur = 0;
+			 while (x % i == 0)
+			 	 x /= i, cur++;
+			 ans *= cur;
+		}
 	printf(I64, ans);
 }

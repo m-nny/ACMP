@@ -27,26 +27,9 @@ double const pi = acos(-1);
 #define next MyLittleNext
 //#define end MyLittleEnd
 #define all(x) x.begin(), x.end()
-#define LOCAL
+//#define LOCAL
 
-int a[33], n;
-char s[33];
-
-ll rec(int pos, int same)
-{
-	if (!same)
-		return (1ll << (n - pos));
-	if (n == pos)
-		return 1;
-	ll ans = 0;
-	if (4 < a[pos])
-		ans += rec(pos + 1, 0);
-	if (7 < a[pos])
-		ans += rec(pos + 1, 0);
-	if (4 == a[pos] || 7 == a[pos])
-		ans += rec(pos + 1, 1);
-	return ans;
-}
+int k1, l1, m1, k2, l2, m2;
 
 int main()
 {
@@ -54,13 +37,14 @@ int main()
 		freopen("input.txt", "r", stdin);
 		freopen("output.txt", "w", stdout);
 	#endif
-	scanf("%s", s);
-	n = strlen(s);
-	for (int i = 0; i < n; i++)
-		a[i] = s[i] - '0';
-	ll ans = 0;
-	for (int i = 1; i < n; i++)
-		ans += (1ll << i);
-	ans += rec(0, 1);
-	printf(I64, ans);
+	scanf("%d%d%d", &k1, &l1, &m1);
+	scanf("%d%d%d", &k2, &l2, &m2);
+	ll cost = k1 / 100 * l1 * m1 + k2 / 100 * l2 * m2;
+	k1 = k1 / 100 * (100 - l1);
+	k2 = k2 / 100 * (100 - l2);
+	if (k1 < k2)
+		cost += (k2 - k1) * m2;
+	else
+		cost += (k1 - k2) * m1;
+	printf(I64, cost);
 }
