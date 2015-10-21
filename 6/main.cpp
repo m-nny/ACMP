@@ -6,6 +6,7 @@
 using namespace std;
 
 #define er {cout << "ERROR"; return 0;}
+
 bool ch (char a)
 {
 	return ((a < 0) || (a > 8));
