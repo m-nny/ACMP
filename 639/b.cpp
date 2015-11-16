@@ -25,7 +25,8 @@ double const pi = acos(-1);
 #define S second
 #define fn
 
-int n, a, b = a = 1;
+int n, m, all;
+map <double, vector <string> > D;
 
 int main()
 {
@@ -34,12 +35,23 @@ int main()
 		freopen("output.txt", "w", stdout);
 	#endif
 	scanf("%d", &n);
-	for (int i = 2; i <= n; i++)
+	for (int k = 1; k <= n; k++)
 	{
-		int c = (a + b);
-		if (c >= 10)
-			c -= 10;
-		a = b, b = c;
+		scanf("%d", &m);
+		all += m;
+		for (int i = 1; i <= m; i++)
+		{
+			double x;
+			string s;
+			cin >> x >> s;
+			D[-x].pb(s);
+		}
 	}
-	printf("%d", b);
+	printf("%d\n", all);
+	for (auto x : D)
+	{
+		for (auto y : x.S)
+			printf("%.02f %s\n", -x.F, y.c_str());
+	}
+
 }

@@ -25,7 +25,17 @@ double const pi = acos(-1);
 #define S second
 #define fn
 
-int n, a, b = a = 1;
+char * S(int t)
+{
+	char * s = new char[6];
+	sprintf(s, "%02d:%02d", t / 60, t % 60);
+	return s;
+}
+
+bool check(char * s)
+{
+	return s[0] == s[4] && s[1] == s[3];
+}
 
 int main()
 {
@@ -33,13 +43,17 @@ int main()
 		freopen("input.txt", "r", stdin);
 		freopen("output.txt", "w", stdout);
 	#endif
-	scanf("%d", &n);
-	for (int i = 2; i <= n; i++)
+	int h, m;
+	scanf("%d:%d", &h, &m);
+	m += h * 60;
+	m++;
+	if (m >= 1440)
+		m -= 1440;
+	while (!check(S(m)))
 	{
-		int c = (a + b);
-		if (c >= 10)
-			c -= 10;
-		a = b, b = c;
+		m++;
+		if (m >= 1440)
+			m -= 1440;
 	}
-	printf("%d", b);
+	puts(S(m));
 }

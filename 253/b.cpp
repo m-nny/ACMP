@@ -25,7 +25,7 @@ double const pi = acos(-1);
 #define S second
 #define fn
 
-int n, a, b = a = 1;
+int a, b, c, x, y;
 
 int main()
 {
@@ -33,13 +33,18 @@ int main()
 		freopen("input.txt", "r", stdin);
 		freopen("output.txt", "w", stdout);
 	#endif
-	scanf("%d", &n);
-	for (int i = 2; i <= n; i++)
+	scanf("%d%d%d%d", &x, &a, &y, &b);
+	a += x * 60;
+	b += y * 60;
+	if (b < a)
+		b += 24 * 60;
+	while (a < b)
 	{
-		int c = (a + b);
-		if (c >= 10)
-			c -= 10;
-		a = b, b = c;
+		if (a % 60 == 0)
+			c += ((a / 60 + 11) % 12 + 1);
+		if (a % 60 == 30)
+			c++;
+		a++;
 	}
-	printf("%d", b);
+	printf("%d", c);
 }

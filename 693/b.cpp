@@ -24,8 +24,9 @@ double const pi = acos(-1);
 #define F first
 #define S second
 #define fn
+#define all(x) x.begin(), x.end()
 
-int n, a, b = a = 1;
+string s, t;
 
 int main()
 {
@@ -33,13 +34,14 @@ int main()
 		freopen("input.txt", "r", stdin);
 		freopen("output.txt", "w", stdout);
 	#endif
-	scanf("%d", &n);
-	for (int i = 2; i <= n; i++)
-	{
-		int c = (a + b);
-		if (c >= 10)
-			c -= 10;
-		a = b, b = c;
-	}
-	printf("%d", b);
+	cin >> s >> t;
+	for (int i = 0; i < int(s.size()); i++)
+		if ('A' <= s[i] && s[i] <= 'Z')
+			s[i] = s[i] - 'A' + 'a';
+	sort(all(s));
+	for (int i = 0; i < int(t.size()); i++)
+		if ('A' <= t[i] && t[i] <= 'Z')
+			t[i] = t[i] - 'A' + 'a';
+	sort(all(t));
+	puts(s == t ? "Yes" : "No");
 }

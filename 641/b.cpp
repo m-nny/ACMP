@@ -25,7 +25,25 @@ double const pi = acos(-1);
 #define S second
 #define fn
 
-int n, a, b = a = 1;
+string s, ans, cur;
+
+void rec(int pos, int cnt)
+{
+	//cout << pos << " " << cnt << " c:" << cur << " a:" << ans << '\n';
+	if (pos == int(s.length()))
+	{
+		if (!cnt && (ans == "" || cur.length() > ans.length() || cur > ans))
+			ans = cur;
+		return;
+	}
+	if (cnt)
+		rec(pos + 1, cnt - 1);
+	if (cur != "" || s[pos] != '0')
+		cur.pb(s[pos]);
+	rec(pos + 1, cnt);
+	if (cur != "" || s[pos] != '0')
+		cur.pop_back();
+}
 
 int main()
 {
@@ -33,13 +51,7 @@ int main()
 		freopen("input.txt", "r", stdin);
 		freopen("output.txt", "w", stdout);
 	#endif
-	scanf("%d", &n);
-	for (int i = 2; i <= n; i++)
-	{
-		int c = (a + b);
-		if (c >= 10)
-			c -= 10;
-		a = b, b = c;
-	}
-	printf("%d", b);
+	cin >> s;
+	rec(0, 2);
+	cout << ans;
 }

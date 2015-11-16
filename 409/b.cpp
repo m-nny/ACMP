@@ -25,7 +25,9 @@ double const pi = acos(-1);
 #define S second
 #define fn
 
-int n, a, b = a = 1;
+int n, a[30010];
+
+double S;
 
 int main()
 {
@@ -34,12 +36,14 @@ int main()
 		freopen("output.txt", "w", stdout);
 	#endif
 	scanf("%d", &n);
-	for (int i = 2; i <= n; i++)
+	for (int i = 1; i <= n; i++)
+		scanf("%d", a + i);
+	if (n == 1)
 	{
-		int c = (a + b);
-		if (c >= 10)
-			c -= 10;
-		a = b, b = c;
+		printf("%d", a[1]);
+		return 0;
 	}
-	printf("%d", b);
+	for (int i = 2; i <= n; i++)
+		S += min(a[i], a[i - 1]) + abs(a[i] - a[i - 1]) / 2.0;
+	printf("%.09f", S / (n - 1));
 }
