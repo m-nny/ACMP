@@ -27,39 +27,36 @@ double const pi = acos(-1);
 #define next MyLittleNext
 //#define end MyLittleEnd
 #define all(x) x.begin(), x.end()
-//#define LOCAL
+//#define fn ""
 
-string s, t;
-int n, m;
-
-int F(string s)
+bool gcd(ll a, ll b, ll c, ll d)
 {
-	int d = (s[0] - t[0] + 26) % 26;
-	for (int i = 1; i < m; i++)
-		if ((s[i] - t[i] + 26) % 26 != d)
-			return -1;
-	return d;	
+	if (a < b)
+		swap(a, b); 
+	while (b)
+	{
+		//printf(I64 " " I64 " " I64 " " I64 "\n", a, b, c, d);
+		if (a >= c && b == d && a % b == c % d)
+			return 1;
+		a %= b;
+		swap(a, b);
+	}
+	return 0;
 }
+
+int n;
+ll a, b, c, d;
 
 int main()
 {
-	#ifdef LOCAL
-		freopen("input.txt", "r", stdin);
-		freopen("output.txt", "w", stdout);
+	#ifdef fn
+		freopen(fn ".in", "r", stdin);
+		freopen(fn ".out", "w", stdout);
 	#endif
-	cin >> s >> t;
-	n = int(s.length());
-	m = int(t.length());
-	int d = -1;
-	for (int i = 0; i + m - 1 < n; i++)
+	scanf("%d", &n);
+	for (int i = 1; i <= n; i++)
 	{
-		d = max(d, F(s.substr(i, m)));
+		scanf(I64 I64 I64 I64, &a, &b, &c, &d);
+		puts(gcd(a, b, c, d) ? "YES" : "NO");
 	}
-	if (d == -1)
-	{
-		puts("IMPOSSIBLE");
-		return 0;
-	}
-	for (int i = 0; i < n; i++)
-		printf("%c", (s[i] - 'A' - d + 26) % 26 + 'A');
 }
