@@ -24,27 +24,44 @@ using namespace std;
 #define frs(ii, ite, vv) for(set<ite>::iterator ii = vv.begin(); ii != vv.end(); ii++)
 #define frq(ii, ite, vv) for(queue<ite>::iterator ii = vv.begin(); ii != vv.end(); ii++)
 
+int n, m;
+string s, t;
+char c = '+';
+vector <string> v;
+
+void f()
+{
+	while (s[0] == c)
+		s = s.substr(1, s.size());
+	while (s.back() == c)
+		s.pop_back();
+//	if (s.size() > m)
+//	{
+//		puts("Impossible.");
+//		exit(0);
+//	}
+	int l = (m - s.size()) / 2;
+	int r = (m - s.size() - l);
+	printf("!%s!%d %d %d\n", s.c_str(), (int)s.size(), l, r);
+	while (l)
+		s = c + s, l--;
+//	while (r--)
+//		s.pb(c);
+	v.pb(s);
+}
+
 int main()
 {
 //	freopen("input.txt", "r", stdin);
 //	freopen("output.txt", "w", stdout);
-	int k, n;
-	cin >> k >> n;
-	str mas[1010];
-	int mx = -1;
-//	getline(cin, mas[1009]);
-	fr(i, n)
+	cin >> m >> n;
+	getline(cin, s);
+	for (int i = 1; i <= n; i++)
 	{
-		getline(cin, mas[i]);
-		cin >> mas[i], mx = max((int)mas[i].size(), mx);
+		getline(cin, s);
+		f();
 	}
-	if (mx > k)
-	{
-		cout << "Impossible.";
-		return 0;
-	}
-	fr(i, n)
-	{
-		cout << mas[i] << '\n';
-	}
+	for (int i = 0; i < n; i++)
+		puts(v[i].c_str());
 }
+
