@@ -26,7 +26,7 @@ if ! test -f "input.txt"
 	then touch input.txt
 fi
 if ! test -f "output.txt"
-	then touch ouput.txt
+	then touch output.txt
 fi
 vim -p a.cpp input.txt output.txt
 

@@ -2,9 +2,9 @@
 *.in
 *.out
 *.o
-input.txt
-output.txt
-a.txt
-b.txt
-c.txt
+*/input.txt
+*/output.txt
+*/a.txt
+*/b.txt
+*/c.txt
 **/*~

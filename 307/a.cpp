@@ -9,7 +9,7 @@ typedef map <int, int> mii;
 typedef pair <int, int> pii;
 typedef pair <ll, ll> pll;
 
-int const maxn = int(1e5 + 12);
+int const maxn = 265;
 int const maxb = int(2e6 + 12);
 int const inf = int(1e9 + 7);
 ll const linf = ll(1e18 + 12);
@@ -29,19 +29,9 @@ double const pi = acos(-1);
 #define all(x) x.begin(), x.end()
 //#define fn
 
-template <typename T>
-bool umax(T & a, T b)
-{
-	return a < b ? (a = b, 1) : 0;
-}
-
-template <typename T>
-bool umin(T & a, T b)
-{
-	return a > b ? (a = b, 1) : 0;
-}
-
-int n, a[maxn];
+int n, m, p, ans;
+int a[maxn], b[maxn];
+int mx[maxn], mn[maxn];
 
 int main()
 {
@@ -49,30 +39,20 @@ int main()
 		freopen("input.txt", "r", stdin);
 		freopen("output.txt", "w", stdout);
 	#endif
-	scanf("%d", &n);
+	scanf("%d%d%d", &n, &m, &p);
 	for (int i = 1; i <= n; i++)
-		scanf("%d", a + i);
-	a[0] = n;
-	int j = 0;
-	set <int> se;
-	for (int i = n; i > 0; i--)
-	{
-		se.insert(a[i]);
-		auto it = se.upper_bound(a[i]);
-		if (it != se.end())
-		{
-			j = i;
-			a[i] = *it;
-			se.erase(it);
-			break;
-		}
-	}
-	for (int i = j + 1; i <= n; i++)
-	{
-		a[i] = *se.begin();
-		se.erase(a[i]);
-	}
+		mx[i] = -inf;
 	for (int i = 1; i <= n; i++)
-		printf("%d ", a[i]);
+		mn[i] = inf;
+	for (int i = 1; i <= p; i++)
+	{
+		scanf("%d%d", a + i, b + i);
+		ans += (b[i] > mn[a[i]]) || (b[i] < mx[a[i]]);
+		for (int j = a[i] + 1; j <= n; j++)
+			mx[j] = max(mx[j], b[i]);
+		for (int j = 1; j < a[i]; j++)
+			mn[j] = min(mn[j], b[i]);
+	}
+	printf("%d", ans);
 }
 

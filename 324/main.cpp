@@ -1,18 +1,18 @@
 
-#include <string>
 #include <iostream>
+#include <cstdio>
 
 using namespace std;
 
+int a[110], n;
+
 int main()
 {
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt","w", stdout);
-	string s;
-	cin>>s;
-	if ((s[0] == s[3]) && (s[1] == s[2]))
-		cout<<"YES";
-	else
-		cout<<"NO";
-	return 0;
+	cin >> n;
+	for (int i = 0; i < n; i++)
+		cin >> a[i];
+	for (int i = 0; i < n; i++)
+		if (i % 2 == 0)
+			cout << a[i] << " ";
 }
+
