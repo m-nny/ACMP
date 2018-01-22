@@ -27,37 +27,73 @@ double const pi = acos(-1);
 #define next MyLittleNext
 //#define end MyLittleEnd
 #define all(x) x.begin(), x.end()
-//#define LOCAL
+//#define fn ""
 
-string s, t;
+
+#define NO {puts("IMPOSSIBLE"); exit(0);}
+
+template <typename T>
+bool umax(T & a, T b)
+{
+	return a < b ? (a = b, 1) : 0;
+}
+
+template <typename T>
+bool umin(T & a, T b)
+{
+	return a > b ? (a = b, 1) : 0;
+}
+
+char s[maxn], t[maxn];
+int a[maxn], b[maxn], c[maxn];
 int n, m;
 
-int F(string s)
-{
-	int d = (t[0] - s[0] + 26) % 26;
-	for (int i = 1; i < m; i++)
-		if ((t[i] - s[i] + 26) % 26 != d)
-			return inf;
-	return d;	
+bool check(int i) {
+	if (i + m - 1 > n)
+		return 0;
+	for (int j = 1; j <= m; j++)
+		if (a[i + j - 1] != c[j])
+			return 0;
+	return 1;
+}
+
+int getNext(int x, int k) {
+	return (x + k) % 26;
+}
+
+int getPrev(int x, int k) {
+	return (x - k + 26) % 26;
+}
+
+void YES(int k) {
+	for (int i = 1; i <= n; i++)
+		s[i] = getPrev(a[i], k) + 'A';
+	puts(s + 1);
+	exit(0);
 }
 
 int main()
 {
-	#ifdef LOCAL
-		freopen("input.txt", "r", stdin);
-		freopen("output.txt", "w", stdout);
+	#ifdef fn
+		freopen(fn ".in", "r", stdin);
+		freopen(fn ".out", "w", stdout);
 	#endif
-	cin >> s >> t;
-	n = int(s.length());
-	m = int(t.length());
-	int d = inf;
-	for (int i = 0; i + m - 1 < n; i++)
-		d = min(d, F(s.substr(i, m)));
-	if (d == inf)
-	{
-		puts("IMPOSSIBLE");
-		return 0;
+	scanf("%s %s", s + 1, t + 1);
+	n = strlen(s + 1);
+	m = strlen(t + 1);
+	for (int i = 1; i <= n; i++)
+		a[i] = s[i] - 'A';
+	for (int i = 1; i <= m; i++)
+		b[i] = t[i] - 'A';
+	if (n < m)
+		NO;
+	for (int k = 0; k < 26; k++) {
+		for (int i = 1; i <= m; i++)
+			c[i] = getNext(b[i], k);
+		for (int i = 1; i <= n; i++)
+			if (check(i))
+				YES(k);
 	}
-	for (int i = 0; i < n; i++)
-		printf("%c", (s[i] - 'A' + d + 26) % 26 + 'A');
+	NO;
 }
+

@@ -1,86 +1,99 @@
 
-#include <iostream>
-#include <string>
-#include <map>
-#include <vector>
-#include <cstdio>
-#include <algorithm>
-#include <vector>
-#include <set>
-#include <ctime>
-#include <cmath>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-#define ll long long
-#define str string
-#define INF (int)(1e9+7)
-#define pb push_back
+typedef long long ll;
+typedef unsigned long long ull;
+typedef map <int, int> mii;
+typedef pair <int, int> pii;
+typedef pair <ll, ll> pll;
+
+int const maxn = int(2e8 + 12);
+int const maxlen = int(1e7 + 12);
+int const inf = int(1e9 + 7);
+ll const linf = ll(1e18 + 12);
+double const eps = 1e-7;
+double const pi = acos(-1);
+#ifdef _WIN32
+	#define I64 "%I64d"
+#else
+	#define I64 "%lld"
+#endif
 #define mp make_pair
+#define pb push_back
 #define F first
 #define S second
-#define fr(ii, ee) for (int ii = 0; ii < ee; ii++)
-#define frv(ii, ite, vv) for(vector<ite>::iterator ii = vv.begin(); ii != vv.end(); ii++)
-#define frs(ii, ite, vv) for(set<ite>::iterator ii = vv.begin(); ii != vv.end(); ii++)
-#define frq(ii, ite, vv) for(queue<ite>::iterator ii = vv.begin(); ii != vv.end(); ii++)
+#define next MyLittleNext
+//#define end MyLittleEnd
+#define all(x) x.begin(), x.end()
+//#define fn ""
+
+template <typename T>
+bool umax(T & a, T b)
+{
+	return a < b ? (a = b, 1) : 0;
+}
+
+template <typename T>
+bool umin(T & a, T b)
+{
+	return a > b ? (a = b, 1) : 0;
+}
+
+int base;
+int f(char x) {
+	int ans = -1;
+	if ('0' <= x && x <= '9')
+		ans = x - '0';
+	if ('A' <= x && x <= 'Z')
+		ans = x - 'A' + 10;
+	if ('a' <= x && x <= 'z')
+		ans = x - 'a' + 10;
+	assert(ans >= 0);
+	return ans;
+}
+
+char s[maxn];
+int n, x;
+
+bool check() {
+	ll y = 0ll;
+	for (int i = 0; i < n; i++) {
+		y = y * base + f(s[i]);
+		if (y > x || y >= maxlen)
+			return 0;
+	}
+	return x == y;
+}
 
 int main()
 {
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
-	str a;
-	int b;
-	cin >> a >> b;
-	reverse(a.begin(), a.end());
-	int sz = a.size();
-	int bb = -1;
-	fr (i, sz)
-	{
-		int bd = (int)(a[i] - '0'), bl = (int)(a[i] - 'A' + 10);
-		if ((0 <= bd) && (bd <= 9))
-			bb = max(bb, bd);
-		else
-			if ((10 <= bl) && (bl <= 35))
-				bb = max(bb, bl);
+	#ifdef fn
+		freopen(fn ".in", "r", stdin);
+		freopen(fn ".out", "w", stdout);
+	#endif
+	scanf("%s", s);
+	scanf(" %d", &x);
+	n = strlen(s);
+	/*
+	if (n >= maxlen) {
+		puts("0");
+		return 0;
 	}
-	for (int i = bb; i <= 36; i++)
-	{
-		ll aa = 0, st = 1;
-		bool fl = 0;
-		fr (j, sz)
-		{
-			int bd = (int)(a[j] - '0'), bl = (int)(a[j] - 'A' + 10);
-			if ((0 <= bd)&&(bd <= 9))
-			{
-				if (bd >= i)
-				{
-					fl = 1;
-					break;
-				}
-				aa += st * bd, st *= i;
-			}
-			else
-			if ((10 <= bl)&&(bl <= 35))
-			{
-/*				if (bl >= i)
-				{
-					cout << 0;
-					return 0;
-				}*/
-				aa += st * bl, st *= i;
-			}
-			else
-			{
-				fl = 1;
-				break;
-			}
-		}
-//		printf("%i %i %i %i\n", aa, b, i, fl);
-		if ((!fl) && (aa == b))
-		{
-			cout << i;
+	*/
+	int minBase = 1;
+	for (int i = 0; i < n; i++)
+		umax(minBase, f(s[i]));
+	minBase++;
+//	printf("%d\n", minBase);
+	for (base = minBase; base < 37; base++) {
+		if (check()) {
+			printf("%d\n", base);
 			return 0;
 		}
 	}
-	cout << 0;
+	puts("0");
+	return 0;
 }
+
