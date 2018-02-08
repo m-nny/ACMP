@@ -4,15 +4,14 @@
 
 using namespace std;
 
-int a[110], n;
+string s;
 
 int main()
 {
-	cin >> n;
-	for (int i = 0; i < n; i++)
-		cin >> a[i];
-	for (int i = 0; i < n; i++)
-		if (i % 2 == 0)
-			cout << a[i] << " ";
+	cin >> s;
+	if (s[0] == s[3] && s[1] == s[2])
+		cout << "YES";
+	else
+		cout << "NO";
 }
 
